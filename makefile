@@ -1,4 +1,4 @@
-.PHONY: install configure start print-ip check stop restart kill ensure unistall
+.PHONY: install configure start print-ip check stop restart kill ensure uninstall shell
 
 SHELL=/bin/bash
 .ONESHELL:
@@ -40,6 +40,7 @@ kill:
 
 ensure:
 	# call this from your crontab
+	# */5 * * * * cd ~/syncthing-user-mode && make ensure
 	make check || make start
 
 uninstall: kill
@@ -48,5 +49,3 @@ uninstall: kill
 
 shell:
 	screen -r syncthing
-
-
