@@ -1,4 +1,4 @@
-.PHONY: install configure start check stop restart kill
+.PHONY: install configure start check stop restart kill ensure unistall
 
 SHELL=/usr/bin/env bash
 .SHELLFLAGS := -ux -o pipefail
@@ -24,7 +24,7 @@ start:
 	screen -dmS syncthing ~/bin/syncthing && echo http://`hostname -f`:`sed -rn 's|.*<address>0.0.0.0:(.*)</address>.*|\1|p' ~/.config/syncthing/config.xml`
 
 check:
-	pgrep -laf syncthingt
+	pgrep -laf syncthing
 
 stop:
 	pkill -f syncthing
@@ -39,8 +39,7 @@ ensure:
 	# call this from your crontab
 	make check || make start
 
-uninstall:
-	pkill -9 -f syncthing
+uninstall: kill
 	rm -rf ~/.config/syncthing/ ~/bin/syncthing
 	echo syncthing removed, synced files left alone
 
